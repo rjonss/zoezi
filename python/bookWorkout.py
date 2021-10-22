@@ -1,15 +1,17 @@
-#!/Library/Frameworks/Python.framework/Versions/3.8/bin/python3
+#!/usr/bin/python3
 
 import requests
 import json
+import datetime
 
 url = 'https://validus.gymsystem.se'
-login_data = '{"login": "email@example.com", "password": "mypassword"}'
+login_data = '{"login": "mymail@example.com", "password": "mypass"}'
 headers = {'Authorization': 'Zoezi 48390b97731921c491c40837076154e4eeb3cd19faab7ad7aa0a359333f9db64'}
-workout_id = '8894'
-fromDate='2021-07-06'
-toDate='2021-07-15'
-searchString = 'FUN SATURDAY'
+days=5
+today = datetime.datetime.now()
+fromDate=(today + datetime.timedelta(days=days)).strftime("%Y-%m-%d")
+toDate=(today + datetime.timedelta(days=days)).strftime("%Y-%m-%d")
+searchString = 'Olympiska lyft'
 
 
 # Create Session and Login
@@ -32,5 +34,5 @@ for wrk in workouts['workouts']:
 print(data_set)
 
 # Book Workout
-#bookWorkout = s.post(url + '/api/v8.0/memberapi/workoutBooking/add?workout=' + workout_id + '&method=trainingcard', headers=headers)
-#print(bookWorkout.text)
+bookWorkout = s.post(url + '/api/v8.0/memberapi/workoutBooking/add?workout=' + str(data_set['workout_id']) + '&method=trainingcard', headers=headers)
+print(bookWorkout.text)
